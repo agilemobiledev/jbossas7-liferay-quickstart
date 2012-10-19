@@ -1,0 +1,22 @@
+#!/bin/bash
+# This is a simple script and will be executed on your CI system if 
+# available.  Otherwise it will execute while your application is stopped
+# before the build step.  This script gets executed directly, so it
+# could be python, php, ruby, etc.
+
+#  Set cluster and cluster port proxy variable names to use based on the type
+#  of JBOSS app.
+clustervar="OPENSHIFT_JBOSSEAP_CLUSTER"
+[ -n "$(printenv $clustervar)" ]  ||  clustervar="OPENSHIFT_JBOSSAS_CLUSTER"
+
+portvar="OPENSHIFT_JBOSSEAP_CLUSTER_PROXY_PORT"
+[ -n "$(printenv $portvar)" ]  ||   \
+      portvar="OPENSHIFT_JBOSSAS_CLUSTER_PROXY_PORT"
+
+
+#  Replace the OPENSHIFT_JBOSS_CLUSTER* variable names with the
+#  JBoss EAP or AS7 specific ones.
+sed -i "s#\({env\.\)OPENSHIFT_JBOSS_CLUSTER_PROXY_PORT\(}\)#\1$portvar\2#g;  \
+        s#\({env\.\)OPENSHIFT_JBOSS_CLUSTER\(}\)#\1$clustervar\2#g;"         \
+     $OPENSHIFT_REPO_DIR/.openshift/config/standalone.xml
+
