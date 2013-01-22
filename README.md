@@ -26,8 +26,8 @@ Create a JBoss AS 7.1 or JBoss EAP 6.0 server
 	
 Add DB support to your application
 ----------------------------------
-          rhc app cartridge add -a $Your-App-Name -c mysql-5.1
-          rhc app cartridge add -a $Your-App-Name -c phpmyadmin-3.4 (optional)
+          rhc cartridge add -a $Your-App-Name -c mysql-5.1
+          rhc cartridge add -a $Your-App-Name -c phpmyadmin-3.4 (optional)
 		
 Application Info
 ----------------
